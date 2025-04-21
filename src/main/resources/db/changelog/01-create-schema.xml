@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0" author="anonymous">
+        <sql>CREATE
+        EXTENSION IF NOT EXISTS "uuid-ossp";</sql>
+    </changeSet>
+
+   <changeSet id="1745107912793-1" author="farahcaa">
+       <createTable tableName="users">
+           <column name="id" type="UUID" defaultValueComputed="uuid_generate_v4()">
+               <constraints primaryKey="true" nullable="false" />
+           </column>
+           <column name="username" type="varchar(255)" >
+               <constraints nullable="false" />
+           </column>
+           <column name="password" type="varchar(255)"
+           <column name="role" type="varchar(255)" >
+               <constraints nullable="false" />
+           </column>
+       </createTable>
+
+       <createTable tableName="products">
+           <column name="id" type="UUID" defaultValueComputed="uuid_generate_v4()">
+               <constraints primaryKey="true" nullable="false" />
+           </column>
+           <column name="warehouse" type="uuid">
+               <constraints foreignKeyName="products_warehouse_id_fkey" references="warehouses(id)"/>
+           </column>
+           <column name="productName" type="varchar(255)" >
+               <constraints nullable="false" />
+           </column>
+           <column name="stock" type="integer" >
+                   <constraints nullable="false" />
+           </column>
+       </createTable>
+
+       <createTable tableName="orders">
+           <column name="id" type="UUID" defaultValueComputed="uuid_generate_v4()">
+           <constraints primaryKey="true" nullable="false"/>
+           </column>
+           <column name="shippingplan" type="UUID">
+               <constraints nullable="false" foreignKeyName="order_shippingPlan_id_fkey" references="shippingPlans"/>
+           </column>
+       </createTable>
+
+       <createTable tableName="shippingPlans">
+           <column name="id" type="UUID" defaultValueComputed="uuid_generate_v4()">
+           <constraints primaryKey="true" nullable="false" />
+           </column>
+           <column name="users_id" type="UUID">
+               <constraints foreignKeyName="shippingPlans_user_id_fkey" references="users" />
+           </column>
+       </createTable>
+   </changeSet>
+</databaseChangeLog>

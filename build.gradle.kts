@@ -1,16 +1,15 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.4'
-	id 'io.spring.dependency-management' version '1.1.7'
+	java
+	id("org.springframework.boot") version "3.4.1"
+	id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = 'com.DDD'
-version = '0.0.1-SNAPSHOT'
+group = "com.ddd"
+version = "1.0.0-SNAPSHOT"
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
@@ -18,11 +17,41 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.security:spring-security-test")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	implementation("com.squareup.okhttp3:okhttp:4.12.0")
+	implementation("org.slf4j:slf4j-api:2.0.16")
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.18.1")
+
+	implementation("org.hibernate.orm:hibernate-core:6.6.2.Final")
+	implementation("org.hibernate.validator:hibernate-validator:8.0.2.Final")
+
+	implementation("org.apache.commons:commons-math4-legacy:4.0-beta1")
+
+	testImplementation("ch.qos.logback:logback-classic:1.5.16")
+
+	implementation("org.postgresql:postgresql:42.7.4")
+	implementation("org.liquibase:liquibase-core:4.30.0")
+
+	implementation("org.mapstruct:mapstruct:1.6.3")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 }
 
-tasks.named('test') {
+tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+/**
+ * This may be needed.
+ * Some unique bug.
+ * Thanks gradle/IntelliJ
+ * See: https://stackoverflow.com/questions/64290545/task-preparekotlinbuildscriptmodel-not-found-in-project-app
+ */
+//tasks.register("prepareKotlinBuildScriptMode
